@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import './OldSidebar.css'; // Re-use or add specific styles here
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001';
-import './OldSidebar.css'; // Re-use or add specific styles here
 
 const AutocompleteInput = ({ value, onChange, placeholder, className }) => {
     const [suggestions, setSuggestions] = useState([]);
