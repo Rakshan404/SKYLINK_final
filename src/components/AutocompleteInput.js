@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001';
 import './OldSidebar.css'; // Re-use or add specific styles here
 
 const AutocompleteInput = ({ value, onChange, placeholder, className }) => {
@@ -28,7 +30,7 @@ const AutocompleteInput = ({ value, onChange, placeholder, className }) => {
 
         try {
             // Use local backend proxy for TomTom Search
-            const url = `http://localhost:3001/api/search?q=${encodeURIComponent(query)}`;
+            const url = `${API_BASE_URL}/api/search?q=${encodeURIComponent(query)}`;
             const response = await axios.get(url);
 
             if (response.data && Array.isArray(response.data)) {
