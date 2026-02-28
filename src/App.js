@@ -16,6 +16,8 @@ import logo1 from './components/logo1.png';
 // ballPointPin import removed
 import logo2 from './components/logo2.png';
 
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001';
+
 // --- ICONS ---
 
 const createEmojiIcon = (isActive) => {
@@ -109,7 +111,7 @@ const RouteLayer = ({ from, to, color, label }) => {
     setUsingFallback(false);
 
     // Use local backend with TomTom Traffic
-    const url = `http://localhost:3001/api/route?startLat=${from.lat}&startLng=${from.lng}&endLat=${to.lat}&endLng=${to.lng}`;
+    const url = `${API_BASE_URL}/api/route?startLat=${from.lat}&startLng=${from.lng}&endLat=${to.lat}&endLng=${to.lng}`;
 
     const timer = setTimeout(() => {
       axios.get(url)
@@ -397,7 +399,7 @@ function App() {
         const usersParam = encodeURIComponent(JSON.stringify(validCoords));
         const categoryParam = encodeURIComponent(category);
         const placesResp = await axios.get(
-          `http://localhost:3001/api/places?viewbox=${minLng},${minLat},${maxLng},${maxLat}&users=${usersParam}&q=${categoryParam}`
+          `${API_BASE_URL}/api/places?viewbox=${minLng},${minLat},${maxLng},${maxLat}&users=${usersParam}&q=${categoryParam}`
         );
 
         const venues = placesResp.data;

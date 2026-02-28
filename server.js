@@ -3,9 +3,10 @@ const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const axios = require('axios');
 
+const path = require('path');
 const app = express();
 const PORT = 3001;
-const DB_PATH = './places.db';
+const DB_PATH = path.join(__dirname, 'places.db');
 
 app.use(cors());
 app.use(express.json());
@@ -240,6 +241,10 @@ app.get('/api/search', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
