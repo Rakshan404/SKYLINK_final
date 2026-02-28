@@ -13,8 +13,7 @@ import AboutSection from './components/AboutSection';
 
 import logo1 from './components/logo1.png';
 
-// ballPointPin import removed
-import logo2 from './components/logo2.png';
+// ballPointPin and logo2 imports removed
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001';
 
