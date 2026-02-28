@@ -30,13 +30,7 @@ const createEmojiIcon = (isActive) => {
   });
 };
 
-const logo2Icon = L.divIcon({
-  className: 'marker-icon-transition',
-  html: `<div class="marker-3d-content"><img src="${logo2}" style="width: 50px; height: 50px;" /></div>`,
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
-  popupAnchor: [0, -50]
-});
+// const logo2Icon = ... (removed because unused)
 
 const meetingIcon = L.divIcon({
   className: '',
@@ -82,10 +76,7 @@ const deg2rad = (deg) => {
 }
 
 // --- HELPER: SHARE LINK GENERATOR ---
-const generateGoogleMapsUrl = (originLat, originLng, destLat, destLng) => {
-  // Generates a direction link from a specific origin to the destination
-  return `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
-};
+// const generateGoogleMapsUrl = ... (removed because unused)
 
 // --- COMPONENTS ---
 function ChangeView({ center, zoom }) {
@@ -166,7 +157,7 @@ const RouteLayer = ({ from, to, color, label }) => {
     }, Math.random() * 400);
 
     return () => clearTimeout(timer);
-  }, [from.lat, from.lng, to.lat, to.lng]);
+  }, [from, to]); // Adjusted dependencies
 
   // Helper to find closest point on polyline
   const getClosestPointOnPolyline = (latlng, path) => {
@@ -287,15 +278,12 @@ function App() {
   const [suggestedVenues, setSuggestedVenues] = useState([]);
   const [weather, setWeather] = useState({ temperature: 24, weathercode: 1, windspeed: 8 }); // Mock initial data
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState("cafe");
-  const [scores, setScores] = useState(null);
-  const [suggestionsCount, setSuggestionsCount] = useState(5);
+  const [category] = useState("cafe");
+  const [suggestionsCount] = useState(5);
   // State for showing a "Copied!" notification
-  const [copyFeedback, setCopyFeedback] = useState(null);
   const [showDashboard, setShowDashboard] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
   const [showInstructions, setShowInstructions] = useState(false);
 
   const userColors = ["#FF0000", "#0000FF", "#008000", "#FFA500", "#000000", "#800080"];
@@ -350,25 +338,17 @@ function App() {
 
   const handleSelectSuggestion = (venue) => {
     setMeetingPoint(venue);
-    setScores(venue.scores || null);
     getWeather(venue.lat, venue.lng);
   };
 
   // --- NEW: Copy Function ---
-  const copyToClipboard = (text, index) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopyFeedback(index);
-      setTimeout(() => setCopyFeedback(null), 2000); // Reset after 2 seconds
-    });
-  };
+  // --- REMOVED: Copy Function (unused) ---
 
   const findSpots = async () => {
     setLoading(true);
     setMeetingPoint(null);
     setCoords([]);
     setWeather(null);
-    setScores(null);
-    setCopyFeedback(null);
     setSearchResults([]); // Clear previous results
 
     // UX Enhancement: Hide sidebar and show instructions
@@ -453,7 +433,6 @@ function App() {
           const topSuggestions = scoredVenues.slice(0, suggestionsCount);
           setSuggestedVenues(topSuggestions);
           setMeetingPoint(bestVenue);
-          setScores(bestVenue.scores);
           getWeather(bestVenue.lat, bestVenue.lng);
 
         } else {
@@ -554,10 +533,7 @@ function App() {
         </div>
       </div>
 
-      {/* ... (Sidebar logic) */}
-
-
-      // ... (in return JSX)
+      {/* Sidebar logic */}
       <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', display: 'flex', zIndex: 2000, pointerEvents: 'none' }}>
         <div style={{ pointerEvents: 'auto' }}>
           <Sidebar onDashboardClick={handleSidebarClick} />
